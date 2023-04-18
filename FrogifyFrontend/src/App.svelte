@@ -1,16 +1,25 @@
 <script>
-    import { onMount } from "svelte";
-    import BaseHeader from "./lib/compontents/BaseHeader.svelte";
-    import Auth from "./lib/compontents/Auth/Auth.svelte";
-    import { loggedIn } from "./lib/Controler.js";
-    import Error from "./lib/compontents/handling/error/msgBox.svelte";
-    import { msgBox } from "./lib/compontents/handling/error/msgBox.js";
+    import BaseHeader from "./lib/Compontents/BaseHeader.svelte";
+    import Auth from "./lib/Compontents/Auth/Auth.svelte";
+    import {loggedIn} from "./lib/Controler.js";
+    import Error from "./lib/Compontents/handling/error/msgBox.svelte";
+    import Feed from "./lib/Compontents/Feed/Feed.svelte";
+    import {getProfilePicture} from "./lib/Compontents/Feed/FeedManager.js";
+
+    let loggedInSub;
+    loggedIn.subscribe((value) => {
+        loggedInSub = value;
+    });
+
 </script>
 
 <main>
-    <BaseHeader />
-    <Error />
-    {#if loggedIn === false}
-        <Auth />
+    <BaseHeader/>
+    <Error/>
+    {#if loggedInSub === false}
+        <Auth/>
+    {:else}
+        <Feed/>
     {/if}
 </main>
+

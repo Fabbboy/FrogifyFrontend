@@ -1,6 +1,7 @@
 import {writable} from 'svelte/store';
 import {msgBox} from "../handling/error/msgBox.js";
 import {hashPwd, truncatePassword} from "../../Tools/PasswordHasher.js";
+import {loggedIn} from "../../Controler.js";
 
 export const loginMode = writable('register');
 
@@ -54,7 +55,6 @@ export async function register(usernameInput, mailInput, passwordInput) {
         .then(res => res.json())
         .then(async data => {
 
-          console.log(data);
           if (data.success === true) {
             const userId = data.userId;
             const userToken = data.userToken;
@@ -106,6 +106,7 @@ export async function login(mailInput, passwordInput) {
                 localStorage.setItem("role", role);
 
                 msgBox(1, "Success", "You have successfully logged in!");
+                loggedIn.set(true);
             } else {
                 msgBox(2, "Error", data.message);
             }
@@ -146,6 +147,7 @@ export async function tryTokenLogin() {
 
 
                 msgBox(1, "Success", "You have successfully logged in!");
+                loggedIn.set(true);
             } else {
                 msgBox(2, "Error", data.message);
             }

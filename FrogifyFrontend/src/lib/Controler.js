@@ -1,1 +1,5 @@
-export let loggedIn = false;
+//export let loggedIn = false;
+
+import {writable} from "svelte/store";
+
+export let loggedIn = writable(false);

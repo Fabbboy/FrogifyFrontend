@@ -1,7 +1,38 @@
+<script>
+
+    import {loggedIn} from "../Controler.js";
+    import {getProfilePicture} from "./Feed/FeedManager.js";
+
+    let loggedInSub;
+    loggedIn.subscribe((value) => {
+        loggedInSub = value;
+    });
+
+
+    let profileImageSrc = "";
+
+    async function updateProfileImage() {
+        if (loggedInSub) {
+            const profileImage = await getProfilePicture();
+            if (profileImage !== null) {
+                console.log("profileImage: ", profileImage);
+                profileImageSrc = profileImage;
+            }
+        }
+    }
+
+    $: loggedInSub, updateProfileImage();
+
+</script>
+
 <div class="baseHeader">
     <a href="/" class="baseHeaderLogo"></a>
     <p class="baseHeaderName">Frogify</p>
     <p class="baseHeaderUndertitle">SMA-Fröschmatt</p>
+
+    {#if loggedInSub === true}
+        <img src={profileImageSrc} alt="profile" class="profileImage"/>
+    {/if}
 </div>
 
 
@@ -40,5 +71,14 @@
         position: relative;
         top: -103%;
         left: 8%;
+    }
+
+    .profileImage{
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        position: relative;
+        top: -195px;
+        left: 93.5%;
     }
 </style>
