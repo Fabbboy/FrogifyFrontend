@@ -1,21 +1,37 @@
-.newsUl{
-    list-style-type: none;
-    margin: 0;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: -20px;
-    overflow: scroll;
-    text-decoration: none;
-}
-
 .newsIl{
     display: block;
-    margin-bottom: -8px;
+    margin-bottom: 10px;
     width: 100%;
 }
+
+.newsItem{
+    width: 100%;
+    background: #292A2F;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    color: #fff;
+    margin-top: 3px;
+    text-decoration: none;
+    /*  padding-bottom: 30px; /* You might want to add some padding to keep the content from touching the edges */
+    margin-left:-20px;
+}
+
+.littleShorterLong {
+    padding-bottom: -20px;
+}
+
+.longContent {
+    padding-bottom: 30px;
+}
+
+.littleLongerLong {
+    padding-bottom: 10px;
+}
+
+.evenLongerContent {
+    padding-bottom: 40px;
+}
+
 
 .newsItem{
     width: 100%;

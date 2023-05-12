@@ -201,6 +201,17 @@ export function createNewsItem(news) {
     pTimestamp.classList.add("newsTimestamp");
     pTimestamp.textContent = clearData(news.date);
 
+    console.log(pInfo.textContent.length + pTitle.textContent.length);
+
+    // Add 'longContent' class if description is longer than a certain limit
+    if (pInfo.textContent.length+ pTitle.textContent.length >= 250) { // Adjust this number to your needs
+           div.classList.add("longContent");
+    }else if(pInfo.textContent.length+ pTitle.textContent.length >= 200){
+        div.classList.add("littleLongerLong");
+    }else{
+        div.classList.add("littleShorterLong");
+    }
+
     div.appendChild(pTitle);
     div.appendChild(pInfo);
     div.appendChild(pTimestamp);
@@ -210,3 +221,4 @@ export function createNewsItem(news) {
 
     return li;
 }
+

@@ -1,12 +1,11 @@
 <script>
-import Info from "./info/Info.svelte";
+import Info from "./Infos/Info.svelte";
+import Posts from "./Posts/Posts.svelte";
 </script>
 
 <div class="feedHolder">
-    <div class="feed">
-
-    </div>
     <Info />
+    <Posts />
 </div>
 
 <style>
@@ -28,13 +27,5 @@ import Info from "./info/Info.svelte";
         padding-right: 20px;
     }
 
-    .feed{
-        grid-area: Feed;
-        background-color: #fff;
-        border-radius: 10px;
-        width: 90%;
-        box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-        overflow: hidden;
-        height: 98%;
-    }
+
 </style>
