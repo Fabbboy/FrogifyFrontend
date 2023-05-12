@@ -1,13 +1,12 @@
 <script>
-
-    import {loggedIn} from "../Controler.js";
-    import {getProfilePicture} from "./Feed/FeedManager.js";
+    import { onMount } from "svelte";
+    import { loggedIn, navigateTo } from "../Controler.js";
+    import { getProfilePicture } from "./Feed/FeedManager.js";
 
     let loggedInSub;
     loggedIn.subscribe((value) => {
         loggedInSub = value;
     });
-
 
     let profileImageSrc = "";
 
@@ -25,12 +24,16 @@
 
 </script>
 
+
 <div class="baseHeader">
-    <a href="/" class="baseHeaderLogo"></a>
+    <a on:click={navigateTo("/")} class="baseHeaderLogo"></a>
     <p class="baseHeaderName">Frogify</p>
     <p class="baseHeaderUndertitle">SMA-Fröschmatt</p>
-
     {#if loggedInSub === true}
+        <div class="breakLiner"></div>
+        <a class="navigationOption" on:click={navigateTo("/")}>Startseite</a>
+        <a class="navigationOption" on:click={navigateTo("/project")}>Projekt</a>
+        <input type="search" class="searchBar" id="searchBar" placeholder="Suche">
         <img src={profileImageSrc} alt="profile" class="profileImage"/>
     {/if}
 </div>
@@ -78,7 +81,56 @@
         height: 70px;
         border-radius: 50%;
         position: relative;
-        top: -195px;
-        left: 93.5%;
+        top: -285px;
+        left: 55%;
     }
+
+    .breakLiner{
+        width:4px;
+        height:90px;
+        background:#464646;
+        position: relative;
+        border-radius: 8px;
+        top: -205px;
+        left: 18%;
+    }
+
+    .navigationOption{
+        color: #fff;
+        font-size:1.4em;
+        position: relative;
+        top: -310px;
+        left: 18%;
+        font-weight: bold;
+        margin-left: 20px;
+        transition: ease-in-out 0.2s;
+    }
+
+    .navigationOption:hover{
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+    .searchBar{
+        width: 300px;
+        height: 50px;
+        border-radius: 8px;
+        position: relative;
+        top: -310px;
+        left: 53%;
+        margin-left: 20px;
+        border: none;
+        padding-left: 10px;
+        font-size: 1.2em;
+        background: #464646;
+        color: #fff;
+    }
+
+    .searchBar:focus{
+        outline: none;
+    }
+
+
+
+
 </style>

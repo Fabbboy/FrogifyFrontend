@@ -1,4 +1,4 @@
-<div class="msgBox" >
+<div class="msgBox" id="msgBox">
     <p class="MsgTitle" id="MsgTitle"></p>
     <p class="MsgContent" id="MsgContent"></p>
 </div>
