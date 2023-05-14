@@ -23,6 +23,10 @@ function monitoredHashPwd(password){
     return currents;
 }
 
+export function truncatePasswordTo(password, length){
+    return password.substring(0, length);
+}
+
 function comparePwd(password, hash){
     return hashPwd(password) === hash;
 }

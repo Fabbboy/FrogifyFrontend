@@ -1,47 +1,85 @@
-export async function getPosts(size) {
-    const data = {
-        amount: size
+class OnePost {
+    constructor(postId, postTitle, postContent, postImageUrl, postDate, userId, likes, userProfilePictureUrl, username, role) {
+        this.postId = postId;
+        this.postTitle = postTitle;
+        this.postContent = postContent;
+        this.postImageUrl = postImageUrl;
+        this.postDate = postDate;
+        this.userId = userId;
+        this.likes = likes;
+        this.userProfilePictureUrl = userProfilePictureUrl;
+        this.username = username;
+        this.role = role;
     }
+}
 
-    const post = {
-        "postId": "",
-        "postTitle": "",
-        "postContent": "",
-        "postImageUrl" : "",
-        "post_date": "",
-        "userId": "",
-        "likes": 0,
-    }
+export function getProfile(userId) {
 
-    let posts = [];
-
-    return fetch("http://localhost:4499/post/getallposts", {
+    return fetch("http://localhost:4499/user/getacc", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+            userId: userId
+        })
     })
         .then(res => res.json())
         .then(data => {
-            if (data.success === true) {
-                posts = data.posts;
-                for (let i = 0; i < posts.length; i++) {
-                    post.postId = posts[i].postId;
-                    post.postTitle = posts[i].postTitle;
-                    post.postContent = posts[i].postContent;
-                    post.postImageUrl = posts[i].postImageUrl;
-                    post.post_date = posts[i].post_date;
-                    post.userId = posts[i].userId;
-                    post.likes = posts[i].likes;
+                if (data.success === true) {
+                    //return data.profilePictureUrl;
+                    return {
+                        profilePictureUrl: data.profilePictureUrl,
+                        username: data.username,
+                        role: data.role
+                    };
+                } else {
+                    console.log("Error");
                 }
-
-                return posts;
-            } else {
-                console.log("Error");
             }
-
-        }).catch(err => {
+        ).catch(err => {
             console.log(err);
-        })
+        });
 }
+
+export async function getPosts() {
+    const toSenddata = {
+        amount: 10
+    }
+
+    try {
+        const response = await fetch("http://localhost:4499/post/getallposts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(toSenddata)
+        });
+        const data = await response.json();
+        if (data.success) {
+            const posts = await Promise.all(data.posts.map(async post => {
+                const profilePictureUrl = await getProfile(post.userId);
+                return new OnePost(post.postId, post.postTitle, post.postContent, post.postImageUrl, post.post_date, post.userId, post.likes, profilePictureUrl.profilePictureUrl, profilePictureUrl.username, profilePictureUrl.role);
+            }));
+            return posts;
+        } else {
+            console.log("Error");
+            return [];
+        }
+    } catch (err) {
+        console.log(err);
+        return [];
+    }
+}
+
+
+//<ul class="feed" id="feed">
+// </ul>
+
+//post:
+//<li class="feedItem">
+//         <div class="postBox">
+//
+//         </div>
+//     </li>
+
